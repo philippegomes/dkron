@@ -14,4 +14,4 @@ RUN go mod download
 COPY . .
 RUN go install ./...
 
-CMD ["dkron agent --server --log-level=debug --bootstrap-expect=1"]
+CMD ["dkron"]
