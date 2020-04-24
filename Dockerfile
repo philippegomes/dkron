@@ -24,11 +24,16 @@ RUN set -x \
 
 COPY --chown=0:0 --from=builder /go/bin/dkron* /opt/local/dkron/
 
-EXPOSE 8080 8946
+EXPOSE 8080 8946 6868
 
 ENV SHELL /bin/bash
 WORKDIR /opt/local/dkron
 
-ENTRYPOINT ["/opt/local/dkron/dkron"]
+ADD ecs-run /usr/local/bin/
+RUN chmod +x /usr/local/bin/ecs-run
 
+ADD docker-entrypoint /opt/local/dkron/
+RUN chmod +x /opt/local/dkron/docker-entrypoint
+
+ENTRYPOINT ["/opt/local/dkron/docker-entrypoint"]
 CMD ["--help"]
